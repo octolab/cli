@@ -42,3 +42,5 @@ after_script:
 
 notifications:
   slack: octolab:1eMS7IqOArBipiu31jYVd0cN
+
+go_import_path: go.octolab.org/toolkit/cli
