@@ -1,4 +1,4 @@
-> # 🧰 go.octolab.org/toolkit/cli
+> # 🧰 toolkit/cli
 >
 > Toolkit for command line interfaces.
 
@@ -6,6 +6,19 @@
 [![Quality][icon_quality]][page_quality]
 [![Documentation][icon_docs]][page_docs]
 [![Coverage][icon_coverage]][page_coverage]
+
+## 🧩 Integration
+
+The library uses [SemVer](https://semver.org) for versioning, and it is not
+[BC](https://en.wikipedia.org/wiki/Backward_compatibility)-safe through major releases.
+You can use [go modules](https://github.com/golang/go/wiki/Modules) or
+[dep](https://golang.github.io/dep/) to manage its version.
+
+```bash
+$ go get go.octolab.org/toolkit/cli
+
+$ dep ensure -add go.octolab.org/toolkit/cli
+```
 
 ---
 
