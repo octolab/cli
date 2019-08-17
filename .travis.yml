@@ -10,6 +10,7 @@ env:
   global:
   - CODECLIMATE=https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
   - GO111MODULE=on
+  - GOFLAGS=-mod=vendor
 
 go:
 - master
@@ -20,12 +21,6 @@ go:
 - 1.10.x
 - 1.11.x
 - 1.12.x
-
-matrix:
-  allow_failures:
-  - go: 1.7.x
-  - go: 1.8.x
-  - go: 1.9.x
 
 before_script:
 - if [[ $TRAVIS_GO_VERSION == 1.12* ]]; then curl -L $CODECLIMATE > ./cc-test-reporter; fi
