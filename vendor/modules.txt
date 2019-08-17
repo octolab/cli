@@ -8,5 +8,10 @@ github.com/pmezard/go-difflib/difflib
 github.com/spf13/cobra
 # github.com/spf13/pflag v1.0.3
 github.com/spf13/pflag
-# github.com/stretchr/testify v1.3.0
+# github.com/stretchr/testify v1.4.0
 github.com/stretchr/testify/assert
+github.com/stretchr/testify/require
+# go.octolab.org v0.0.2
+go.octolab.org/os/shell
+# gopkg.in/yaml.v2 v2.2.2
+gopkg.in/yaml.v2
