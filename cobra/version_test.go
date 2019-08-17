@@ -11,21 +11,20 @@ import (
 )
 
 func TestVersionCommand(t *testing.T) {
-	tests := []struct {
-		name                string
+	tests := map[string]struct {
 		release, date, hash string
 		features            []string
 	}{
-		{
-			"stable version",
+		"stable version": {
 			"1.0.0",
 			"2019-07-17T12:44:00Z",
 			"4f8c7f4",
 			[]string{"featureA=true", "featureB=false"},
 		},
 	}
-	for _, test := range tests {
-		t.Run(test.name, func(t *testing.T) {
+
+	for name, test := range tests {
+		t.Run(name, func(t *testing.T) {
 			buf := bytes.NewBuffer(nil)
 			app := &cobra.Command{Use: "cli"}
 			app.AddCommand(NewVersionCommand(test.release, test.date, test.hash, test.features...))
