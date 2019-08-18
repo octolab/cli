@@ -22,7 +22,6 @@ var version = template.Must(template.New("version").Parse(`
 
 // NewVersionCommand returns a command that helps to build version info.
 //
-//  ```bash
 //  $ cli version
 //  cli:
 //    version     : 1.0.0
@@ -32,7 +31,6 @@ var version = template.Must(template.New("version").Parse(`
 //    go compiler : gc
 //    platform    : darwin/amd64
 //    features    : featureA=true, featureB=false
-//  ```
 //
 func NewVersionCommand(release, date, hash string, features ...string) *cobra.Command {
 	return &cobra.Command{
