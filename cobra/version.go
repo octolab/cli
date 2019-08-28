@@ -9,8 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var version = template.Must(template.New("version").Parse(`
-{{.Name}}:
+var version = template.Must(template.New("version").Parse(`{{.Name}}:
   version     : {{.Version}}
   build date  : {{.BuildDate}}
   git hash    : {{.GitHash}}
