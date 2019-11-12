@@ -47,7 +47,12 @@ refresh: deps-update deps generate format test-with-coverage
 
 .PHONY: test
 test:
-	@go test -race -timeout $(TIMEOUT) $(MODULE)/...
+#	fix broken builds
+#	go: downloading go.octolab.org v0.0.5
+#	go: module lookup disabled by -mod=vendor
+#	Makefile:50: recipe for target 'test' failed
+#	@go test -race -timeout $(TIMEOUT) $(MODULE)/...
+	@GOFLAGS=-mod= go test -race -timeout $(TIMEOUT) $(MODULE)/...
 
 .PHONY: test-with-coverage
 test-with-coverage:
