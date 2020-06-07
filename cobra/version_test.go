@@ -13,13 +13,25 @@ import (
 func TestVersionCommand(t *testing.T) {
 	tests := map[string]struct {
 		release, date, hash string
-		features            []string
+		features            []Feature
+		expected            string
 	}{
 		"stable version": {
 			"1.0.0",
 			"2019-07-17T12:44:00Z",
 			"4f8c7f4",
-			[]string{"featureA=true", "featureB=false"},
+			[]Feature{
+				{"featureA", true},
+				{"featureB", false},
+			},
+			"features    : featureA=true, featureB=false",
+		},
+		"stable version without features": {
+			"1.0.0",
+			"2019-07-17T12:44:00Z",
+			"4f8c7f4",
+			nil,
+			"features    : -",
 		},
 	}
 
@@ -36,9 +48,7 @@ func TestVersionCommand(t *testing.T) {
 			assert.Contains(t, buf.String(), test.release)
 			assert.Contains(t, buf.String(), test.date)
 			assert.Contains(t, buf.String(), test.hash)
-			for _, feature := range test.features {
-				assert.Contains(t, buf.String(), feature)
-			}
+			assert.Contains(t, buf.String(), test.expected)
 		})
 	}
 }
