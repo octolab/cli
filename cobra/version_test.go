@@ -6,6 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/stretchr/testify/assert"
+	"go.octolab.org/toolkit/config"
 
 	. "go.octolab.org/toolkit/cli/cobra"
 )
@@ -13,16 +14,16 @@ import (
 func TestVersionCommand(t *testing.T) {
 	tests := map[string]struct {
 		release, date, hash string
-		features            []Feature
+		features            []config.Feature
 		expected            string
 	}{
 		"stable version": {
 			"1.0.0",
 			"2019-07-17T12:44:00Z",
 			"4f8c7f4",
-			[]Feature{
-				{"featureA", true},
-				{"featureB", false},
+			[]config.Feature{
+				{Name: "featureA", Enabled: true},
+				{Name: "featureB", Enabled: false},
 			},
 			"features    : featureA=true, featureB=false",
 		},
