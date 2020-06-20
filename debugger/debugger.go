@@ -54,11 +54,5 @@ func (debugger *debugger) Debug(logger func(error), shutdown ...func()) (string,
 
 // Stop tries to stop debugger if it runs.
 func (debugger *debugger) Stop(ctx context.Context) error {
-	if err := debugger.server.Shutdown(ctx); err != nil {
-		return errors.Wrap(err, "debugger: shutdown server")
-	}
-	if err := debugger.listener.Close(); err != nil {
-		return errors.Wrap(err, "debugger: stop listen tcp")
-	}
-	return nil
+	return errors.Wrap(debugger.server.Shutdown(ctx), "debugger: shutdown server")
 }
