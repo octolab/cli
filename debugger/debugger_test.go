@@ -2,6 +2,8 @@ package debugger_test
 
 import (
 	"context"
+	"errors"
+	"net"
 	"regexp"
 	"sync/atomic"
 	"testing"
@@ -42,17 +44,30 @@ func TestDebugger(t *testing.T) {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)
 	shutdown := func() {
-		if atomic.AddUint32(&count, 1) == 2 {
-			cancel()
-		}
+		atomic.AddUint32(&count, 1)
+		cancel()
 	}
 	debugger := Must(WithSpecificHost("127.0.0.1:"))
 
-	addr, success := debugger.Debug(func(err error) { shutdown() }, shutdown)
+	addr, success := debugger.Debug(func(err error) { require.NoError(t, err) }, shutdown)
 	assert.True(t, success)
 	assert.Regexp(t, regexp.MustCompile(`127.0.0.1:\d+`), addr)
 
 	assert.NoError(t, debugger.Stop(ctx))
 	<-ctx.Done()
-	assert.True(t, count == 2)
+	assert.True(t, atomic.LoadUint32(&count) == 1)
+
+	t.Run("fail to debug", func(t *testing.T) {
+		ctrl := gomock.NewController(t)
+		defer ctrl.Finish()
+
+		listener, server := NewMockListener(ctrl), NewMockServer(ctrl)
+		listener.EXPECT().Addr().Return(&net.TCPAddr{IP: net.IP{127, 0, 0, 1}, Port: 1234})
+		server.EXPECT().Serve(listener).Return(errors.New("fail to serve"))
+
+		ctx, cancel := context.WithCancel(context.Background())
+		debugger := Must(WithCustomListenerAndServer(listener, server))
+		debugger.Debug(func(err error) { cancel() })
+		<-ctx.Done()
+	})
 }

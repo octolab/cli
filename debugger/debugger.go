@@ -2,6 +2,7 @@ package debugger
 
 import (
 	"context"
+	"net/http"
 	_ "net/http/pprof"
 	"sync"
 	"sync/atomic"
@@ -43,11 +44,16 @@ type debugger struct {
 func (debugger *debugger) Debug(logger func(error), shutdown ...func()) (string, bool) {
 	var status uint32
 	debugger.debug.Do(func() {
-		atomic.CompareAndSwapUint32(&status, 0, 1)
-		go safe.Do(func() error { return debugger.server.Serve(debugger.listener) }, logger)
 		for _, fn := range shutdown {
 			debugger.server.RegisterOnShutdown(fn)
 		}
+		go safe.Do(func() error {
+			if err := debugger.server.Serve(debugger.listener); err != http.ErrServerClosed {
+				return errors.Wrap(err, "debugger: serve listener")
+			}
+			return nil
+		}, logger)
+		atomic.CompareAndSwapUint32(&status, 0, 1)
 	})
 	return debugger.listener.Addr().String(), atomic.CompareAndSwapUint32(&status, 1, 0)
 }
