@@ -46,7 +46,7 @@ func TestDebugger(t *testing.T) {
 			cancel()
 		}
 	}
-	debugger := Must(WithBuiltinServer(config.Server{Address: "127.0.0.1:"}))
+	debugger := Must(WithSpecificHost("127.0.0.1:"))
 
 	addr, success := debugger.Debug(func(err error) { shutdown() }, shutdown)
 	assert.True(t, success)

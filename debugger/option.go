@@ -27,9 +27,7 @@ func WithBuiltinServer(config config.Server) Option {
 			IdleTimeout:       config.IdleTimeout,
 			MaxHeaderBytes:    config.MaxHeaderBytes,
 		}
-		debugger.listener = listener
-		debugger.server = server
-		return nil
+		return WithCustomListenerAndServer(listener, server)(debugger)
 	}
 }
 
@@ -39,5 +37,12 @@ func WithCustomListenerAndServer(listener Listener, server Server) Option {
 		debugger.listener = listener
 		debugger.server = server
 		return nil
+	}
+}
+
+// WithSpecificHost configures debugger by specific host.
+func WithSpecificHost(host string) Option {
+	return func(debugger *debugger) error {
+		return WithBuiltinServer(config.Server{Address: host})(debugger)
 	}
 }
