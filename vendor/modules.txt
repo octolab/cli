@@ -1,6 +1,6 @@
 # github.com/davecgh/go-spew v1.1.1
 github.com/davecgh/go-spew/spew
-# github.com/golang/mock v1.4.3
+# github.com/golang/mock v1.4.4
 github.com/golang/mock/gomock
 # github.com/inconshreveable/mousetrap v1.0.0
 github.com/inconshreveable/mousetrap
@@ -15,9 +15,9 @@ github.com/spf13/pflag
 # github.com/stretchr/testify v1.6.1
 github.com/stretchr/testify/assert
 github.com/stretchr/testify/require
-# go.octolab.org v0.0.29
+# go.octolab.org v0.2.0
 go.octolab.org/safe
-# go.octolab.org/toolkit/config v0.0.2
+# go.octolab.org/toolkit/config v0.0.4
 go.octolab.org/toolkit/config
 go.octolab.org/toolkit/config/http
 # gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c
