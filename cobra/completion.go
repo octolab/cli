@@ -11,6 +11,7 @@ import (
 
 const (
 	bashFormat       = "bash"
+	fishFormat       = "fish"
 	zshFormat        = "zsh"
 	powershellFormat = "powershell"
 )
@@ -31,8 +32,8 @@ const (
 func NewCompletionCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "completion",
-		Short: "print Bash, Zsh or PowerShell completion",
-		Long:  "Print Bash, Zsh or PoserShell completion.",
+		Short: "print Bash, fish, Zsh or PowerShell completion",
+		Long:  "Print Bash, fish, Zsh or PoserShell completion.",
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			sh, err := shell.Classify(os.Getenv("SHELL"), shell.Completion)
 			if err != nil {
@@ -52,6 +53,14 @@ func NewCompletionCommand() *cobra.Command {
 			Long:  "Print Bash completion.",
 			RunE: func(cmd *cobra.Command, args []string) error {
 				return root(cmd).GenBashCompletion(cmd.OutOrStdout())
+			},
+		},
+		&cobra.Command{
+			Use:   fishFormat,
+			Short: "print fish completion",
+			Long:  "Print fish completion.",
+			RunE: func(cmd *cobra.Command, args []string) error {
+				return root(cmd).GenFishCompletion(cmd.OutOrStdout(), true)
 			},
 		},
 		&cobra.Command{

@@ -10,6 +10,7 @@ type Shell int
 const (
 	Sh         Shell = 1 << iota // https://en.wikipedia.org/wiki/Bourne_shell
 	Bash                         // https://en.wikipedia.org/wiki/Bash_(Unix_shell)
+	Fish                         // https://en.wikipedia.org/wiki/Fish_(Unix_shell)
 	Zsh                          // https://en.wikipedia.org/wiki/Z_shell
 	PowerShell                   // https://en.wikipedia.org/wiki/PowerShell
 )
@@ -20,6 +21,8 @@ func (sh Shell) String() string {
 		return "sh"
 	case Bash:
 		return "bash"
+	case Fish:
+		return "fish"
 	case Zsh:
 		return "zsh"
 	case PowerShell:
@@ -50,6 +53,8 @@ func Classify(bin string, operations ...Operation) (sh Shell, err error) {
 		sh = Sh
 	case "bash":
 		sh = Bash
+	case "fish":
+		sh = Fish
 	case "zsh":
 		sh = Zsh
 	case "powershell", "powershell.exe", "pwsh.exe":
