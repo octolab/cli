@@ -45,7 +45,7 @@ github.com/stretchr/testify/assert
 github.com/stretchr/testify/require
 # github.com/subosito/gotenv v1.2.0
 github.com/subosito/gotenv
-# go.octolab.org v0.5.4
+# go.octolab.org v0.7.2
 go.octolab.org/errors
 go.octolab.org/safe
 # go.octolab.org/toolkit/config v0.0.4

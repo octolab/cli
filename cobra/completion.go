@@ -1,84 +1,41 @@
 package cobra
 
-import (
-	"fmt"
-	"os"
-
-	"github.com/spf13/cobra"
-
-	"go.octolab.org/toolkit/cli/internal/os/shell"
-)
+import "github.com/spf13/cobra"
 
 const (
 	bashFormat       = "bash"
 	fishFormat       = "fish"
-	zshFormat        = "zsh"
 	powershellFormat = "powershell"
+	zshFormat        = "zsh"
 )
 
 // NewCompletionCommand returns a command that helps to build autocompletion.
 //
-//  $ source <(cli completion)
-//  #
-//  # or add into .bash_profile / .zshrc
-//  # if [[ -n "$(which cli)" ]]; then
-//  #   source <(cli completion)
-//  # fi
-//  #
-//  # or use bash-completion / zsh-completions
 //  $ cli completion bash > /path/to/bash_completion.d/cli.sh
 //  $ cli completion zsh  > /path/to/zsh-completions/_cli.zsh
 //
 func NewCompletionCommand() *cobra.Command {
-	cmd := &cobra.Command{
+	command := cobra.Command{
 		Use:   "completion",
 		Short: "print Bash, fish, Zsh or PowerShell completion",
 		Long:  "Print Bash, fish, Zsh or PoserShell completion.",
-		RunE: func(cmd *cobra.Command, _ []string) error {
-			sh, err := shell.Classify(os.Getenv("SHELL"), shell.Completion)
-			if err != nil {
-				return err
+
+		Args:      cobra.ExactValidArgs(1),
+		ValidArgs: []string{bashFormat, fishFormat, powershellFormat, zshFormat},
+
+		RunE: func(cmd *cobra.Command, args []string) error {
+			switch args[0] {
+			case bashFormat:
+				return root(cmd).GenBashCompletion(cmd.OutOrStdout())
+			case fishFormat:
+				return root(cmd).GenFishCompletion(cmd.OutOrStdout(), true)
+			case powershellFormat:
+				return root(cmd).GenPowerShellCompletion(cmd.OutOrStdout())
+			case zshFormat:
+				return root(cmd).GenZshCompletion(cmd.OutOrStdout())
 			}
-			child, args, _ := cmd.Find([]string{sh.String()})
-			if child == nil || child == cmd {
-				return fmt.Errorf("completion: %s is not supported", sh)
-			}
-			return child.RunE(child, args)
+			panic("unreachable")
 		},
 	}
-	cmd.AddCommand(
-		&cobra.Command{
-			Use:   bashFormat,
-			Short: "print Bash completion",
-			Long:  "Print Bash completion.",
-			RunE: func(cmd *cobra.Command, args []string) error {
-				return root(cmd).GenBashCompletion(cmd.OutOrStdout())
-			},
-		},
-		&cobra.Command{
-			Use:   fishFormat,
-			Short: "print fish completion",
-			Long:  "Print fish completion.",
-			RunE: func(cmd *cobra.Command, args []string) error {
-				return root(cmd).GenFishCompletion(cmd.OutOrStdout(), true)
-			},
-		},
-		&cobra.Command{
-			Use:   powershellFormat,
-			Short: "print PowerShell completion",
-			Long:  "Print PowerShell completion.",
-			RunE: func(cmd *cobra.Command, args []string) error {
-				return root(cmd).GenPowerShellCompletion(cmd.OutOrStdout())
-			},
-		},
-		&cobra.Command{
-			Use:   zshFormat,
-			Short: "print Zsh completion",
-			Long:  "Print Zsh completion.",
-			RunE: func(cmd *cobra.Command, args []string) error {
-				return root(cmd).GenZshCompletion(cmd.OutOrStdout())
-			},
-		},
-	)
-	return cmd
+	return &command
 }

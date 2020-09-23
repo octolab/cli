@@ -26,6 +26,9 @@ func NewVersionCommand(release, date, hash string, features ...config.Feature) *
 		Use:   "version",
 		Short: "show application version",
 		Long:  "Show application version.",
+
+		Args: cobra.NoArgs,
+
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return version.Execute(cmd.OutOrStdout(), struct {
 				Name       string
