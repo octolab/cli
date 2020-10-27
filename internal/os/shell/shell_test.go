@@ -35,7 +35,7 @@ func TestClassify(t *testing.T) {
 	}
 
 	t.Run("unclassified", func(t *testing.T) {
-		sh, err := Classify("/usr/local/bin/fish", All)
+		sh, err := Classify("/bin/csh", All)
 		assert.Error(t, err)
 		assert.Empty(t, sh)
 		assert.Empty(t, sh.String())

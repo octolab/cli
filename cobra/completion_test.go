@@ -18,6 +18,7 @@ func TestCompletionCommand(t *testing.T) {
 		expected string
 	}{
 		"Bash":       {"bash", "# bash completion for cli"},
+		"fish":       {"fish", "# fish completion for cli"},
 		"Zsh":        {"zsh", "#compdef _cli cli"},
 		"PowerShell": {"powershell", "Register-ArgumentCompleter -Native -CommandName 'cli' -ScriptBlock"},
 	}
@@ -41,6 +42,7 @@ func TestCompletionCommand(t *testing.T) {
 			"Zsh":        "/usr/local/bin/zsh",
 			"PowerShell": "/usr/local/bin/powershell",
 			"fish":       "/usr/local/bin/fish",
+			"csh":        "/bin/csh",
 			"sh":         "/bin/sh",
 		}
 		defer func(before string) { _ = os.Setenv("SHELL", before) }(os.Getenv("SHELL"))
@@ -67,8 +69,8 @@ func TestCompletionCommand(t *testing.T) {
 			app.SetArgs([]string{"completion"})
 			app.SetOut(buf)
 
-			assert.NoError(t, os.Setenv("SHELL", binaries["fish"]))
-			assert.EqualError(t, app.Execute(), `shell: cannot classify shell by "/usr/local/bin/fish"`)
+			assert.NoError(t, os.Setenv("SHELL", binaries["csh"]))
+			assert.EqualError(t, app.Execute(), `shell: cannot classify shell by "/bin/csh"`)
 		})
 
 		t.Run("unsupported", func(t *testing.T) {
