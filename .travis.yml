@@ -9,6 +9,7 @@ cache:
 env:
   global:
     - CODECLIMATE=https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+    - GO111MODULE=on
 
 go:
   - master
@@ -24,6 +25,7 @@ jobs:
     - go: master
 
 before_script:
+  - make env deps-fetch
   - |
     if [[ $TRAVIS_GO_VERSION == 1.15* ]]; then
       curl -sL $CODECLIMATE > /home/travis/gopath/bin/cc-test-reporter
@@ -34,7 +36,7 @@ before_script:
 script:
   - |
     if [[ $TRAVIS_GO_VERSION == 1.15* ]]; then
-      make test-with-coverage-profile
+      make test-with-coverage
     else
       make test
     fi
@@ -42,9 +44,10 @@ script:
 after_script:
   - |
     if [[ $TRAVIS_GO_VERSION == 1.15* ]]; then
+      sed -i "s|$(go list -m)/||g" c.out # https://github.com/codeclimate/test-reporter/issues/378
       cc-test-reporter after-build -t gocov -p $(go list -m) --exit-code $TRAVIS_TEST_RESULT
     fi
 
 notifications:
   slack:
-    secure: VHWCBgcxc9BejOM9pSTqAyXzZN6DEW/UzJKGkNX+lWL1wREIDmJ7iFKM1ZUfTwU6j5WtOE4ruJlfpUlmmlzicqTZUBIkGCJH6LoX9kwP+6IKBD/aCFuGwRuptKKU0I8pLV6Jvs2m2WQBlKQrfSX9IIM4zqb0M+ST067huwRscJP/4bJJ2aPg+dQiGeR3VHLit/izMRzk/IjnT093i3qGlXDhdRZrxnlqd5flmSlnU5sBTfRr9wHcMdrxIXK3smhay/w8M7XeuIgpv9mUjizmg5e+bQkm4e8AZZxYasvUQAdLWWylcwMk9xPHYy9QGKRFTSl1weon6rRrXWVXP1b9PpR8PYeg1qPvV0k+QNKokDdveqzd2N6ZAilRqAMNVYYYnI1fgLTySfBdIXKMwZAM8OnQk0BBBfyPp+FkoB/zewC6pFy54w7gM2pjefdV3RWjOsc6ux/W6Ro2msZufDW1OzJU4Yj4uzWCtZdsjjkGcA2fB9cDQWlhhmkYVpc7tDfhQ2GFgRmTvuvCvZP2jfUbHcMTgK1CW0+zbX5gsGorWCrMvHL6boV3iRydndOvCFKBUFdDDPvKBjbRIJRuoNprpSmhjWwRYZdUUD+HU/S64vm4mKiWoLhP3hUeDHKSg26F7GomvEGoVz2MCkaqXteRUi9tAhNJIjy88a/l354IMWg=
+    secure: lOPtF0knN/LO7v02Ntm3cSmbcmA/Po6/ZJWdLcCVcdTfRA/TdsGvVmsrBaNsieGES02c+Zqb6aijVtLurkiIimUADyrMzZd0VvCv5AR+G1v+5gGDRUPlpFKoEG6EvzKXgcYAV5ZRiEYTPmr4EDIxAArTO/Ip8mYiu2H6CFSsQEWOerJWwViYYvSwrDogAxQYErADRDnmL2N7NzkQBhADF3brZz13aijEtItsm6hAdWfJEdQstju1cuD3Ka/mSfDT0ZWLxbsC8TVWJ4nTL2niQZGAqT8mtdaEFcdifnKHqeQI/TnBH7tOtdHGR83j0/PhfEAqMdhW1Q3QGq9d6zvvfB1MIciSMlGCWvbasm6cBCfKdgld5up8s5WnXH40mAlBST3U3vqZ/13IiPkAi+iyTMAwoGTfWc1J+jrSHwOFMH+Z6u9vPioGZQHz8hAMTBguGkEaLMeBChzKeARzDvE33EBtkvzG5MkEjG9R5IZpSLElECDe/lbdpWdjOVnIXeYDRf0C91QG0LP8Znlgaes1FvmsOkXoNYJM2osYJRPFjrC84fzi5aYv8v6Gg9HGRAQDhRXMJ2QXHqTfzg29LtLe5JjZLq4hE4Gix4m0GFKlvcW9cbwR0c8v1W4kTZSPqtHPtqbbu2J3ByWFAwdYE+T+YLp6EhKRHsBiGIMo997eIm0=
