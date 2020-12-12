@@ -1,4 +1,4 @@
-> # 🧰 toolkit/cli
+> # 💾 toolkit/cli
 >
 > Toolkit for command line interfaces.
 
@@ -7,6 +7,7 @@
 [![Quality][quality.icon]][quality.page]
 [![Template][template.icon]][template.page]
 [![Coverage][coverage.icon]][coverage.page]
+[![Mirror][mirror.icon]][mirror.page]
 
 ## 🧩 Integration
 
@@ -18,9 +19,7 @@ You can use [go modules](https://github.com/golang/go/wiki/Modules) to manage it
 $ go get go.octolab.org/toolkit/cli@latest
 ```
 
----
-
-made with ❤️ for everyone
+<p align="right">made with ❤️ for everyone</p>
 
 [build.page]:       https://travis-ci.com/octolab/cli
 [build.icon]:       https://travis-ci.com/octolab/cli.svg?branch=master
@@ -34,3 +33,5 @@ made with ❤️ for everyone
 [quality.icon]:     https://goreportcard.com/badge/go.octolab.org/toolkit/cli
 [template.page]:    https://github.com/octomation/go-module
 [template.icon]:    https://img.shields.io/badge/template-go--module-blue
+[mirror.page]:      https://bitbucket.org/kamilsk/cli
+[mirror.icon]:      https://img.shields.io/badge/mirror-bitbucket-blue

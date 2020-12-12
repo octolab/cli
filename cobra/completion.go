@@ -10,6 +10,7 @@ const (
 )
 
 // NewCompletionCommand returns a command that helps to build autocompletion.
+// It supports Bash, fish, Zsh and PowerShell shells.
 //
 //  $ cli completion bash > /path/to/bash_completion.d/cli.sh
 //  $ cli completion zsh  > /path/to/zsh-completions/_cli.zsh
