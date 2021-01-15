@@ -1,6 +1,11 @@
 package cobra
 
-import "github.com/spf13/cobra"
+import (
+	"os"
+	"path/filepath"
+
+	"github.com/spf13/cobra"
+)
 
 const (
 	bashFormat       = "bash"
@@ -21,21 +26,31 @@ func NewCompletionCommand() *cobra.Command {
 		Short: "print Bash, fish, Zsh or PowerShell completion",
 		Long:  "Print Bash, fish, Zsh or PoserShell completion.",
 
-		Args:      cobra.ExactValidArgs(1),
+		Args:      cobra.MaximumNArgs(1),
 		ValidArgs: []string{bashFormat, fishFormat, powershellFormat, zshFormat},
 
 		RunE: func(cmd *cobra.Command, args []string) error {
-			switch args[0] {
-			case bashFormat:
-				return root(cmd).GenBashCompletion(cmd.OutOrStdout())
+			format := map[string]string{
+				"bash": bashFormat,
+				"fish": fishFormat,
+				"zsh":  zshFormat,
+			}[filepath.Base(
+				os.Getenv("SHELL"),
+			)]
+			if len(args) > 0 {
+				format = args[0]
+			}
+
+			switch format {
 			case fishFormat:
 				return root(cmd).GenFishCompletion(cmd.OutOrStdout(), true)
 			case powershellFormat:
 				return root(cmd).GenPowerShellCompletion(cmd.OutOrStdout())
 			case zshFormat:
 				return root(cmd).GenZshCompletion(cmd.OutOrStdout())
+			default:
+				return root(cmd).GenBashCompletion(cmd.OutOrStdout())
 			}
-			panic("unreachable")
 		},
 	}
 	return &command

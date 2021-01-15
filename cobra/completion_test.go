@@ -6,7 +6,6 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 
 	. "go.octolab.org/toolkit/cli/cobra"
 )
@@ -34,9 +33,4 @@ func TestCompletionCommand(t *testing.T) {
 			assert.Contains(t, buf.String(), test.expected)
 		})
 	}
-
-	t.Run("unreachable", func(t *testing.T) {
-		command := NewCompletionCommand()
-		require.Panics(t, func() { require.NoError(t, command.RunE(command, []string{"unknown"})) })
-	})
 }
