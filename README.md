@@ -21,6 +21,7 @@ $ go get go.octolab.org/toolkit/cli@latest
 
 <p align="right">made with ❤️ for everyone</p>
 
+[awesome.icon]:     https://awesome.re/mentioned-badge.svg
 [build.page]:       https://travis-ci.com/octolab/cli
 [build.icon]:       https://travis-ci.com/octolab/cli.svg?branch=master
 [coverage.page]:    https://codeclimate.com/github/octolab/cli/test_coverage
@@ -28,10 +29,12 @@ $ go get go.octolab.org/toolkit/cli@latest
 [design.page]:      https://www.notion.so/33715348cc114ea79dd350a25d16e0b0?r=0b753cbf767346f5a6fd51194829a2f3
 [docs.page]:        https://pkg.go.dev/go.octolab.org/toolkit/cli
 [docs.icon]:        https://img.shields.io/badge/docs-pkg.go.dev-blue
+[mirror.page]:      https://bitbucket.org/kamilsk/cli
+[mirror.icon]:      https://img.shields.io/badge/mirror-bitbucket-blue
 [promo.page]:       https://github.com/octolab/cli
 [quality.page]:     https://goreportcard.com/report/go.octolab.org/toolkit/cli
 [quality.icon]:     https://goreportcard.com/badge/go.octolab.org/toolkit/cli
 [template.page]:    https://github.com/octomation/go-module
 [template.icon]:    https://img.shields.io/badge/template-go--module-blue
-[mirror.page]:      https://bitbucket.org/kamilsk/cli
-[mirror.icon]:      https://img.shields.io/badge/mirror-bitbucket-blue
+
+[_]:                https://img.shields.io/sourcegraph/rrc/go.octolab.org/toolkit/cli
