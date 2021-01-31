@@ -40,7 +40,7 @@ func NewVersionCommand(release, date, hash string, features ...config.Feature) *
 				Platform   string
 				Features   fmt.Stringer
 			}{
-				Name:       root(cmd).Name(),
+				Name:       cmd.Root().Name(),
 				Version:    release,
 				BuildDate:  date,
 				GitHash:    hash,

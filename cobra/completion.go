@@ -43,13 +43,13 @@ func NewCompletionCommand() *cobra.Command {
 
 			switch format {
 			case fishFormat:
-				return root(cmd).GenFishCompletion(cmd.OutOrStdout(), true)
+				return cmd.Root().GenFishCompletion(cmd.OutOrStdout(), true)
 			case powershellFormat:
-				return root(cmd).GenPowerShellCompletion(cmd.OutOrStdout())
+				return cmd.Root().GenPowerShellCompletion(cmd.OutOrStdout())
 			case zshFormat:
-				return root(cmd).GenZshCompletion(cmd.OutOrStdout())
+				return cmd.Root().GenZshCompletion(cmd.OutOrStdout())
 			default:
-				return root(cmd).GenBashCompletion(cmd.OutOrStdout())
+				return cmd.Root().GenBashCompletion(cmd.OutOrStdout())
 			}
 		},
 	}
