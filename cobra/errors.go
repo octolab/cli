@@ -7,26 +7,20 @@ import (
 )
 
 // SilentError makes the cause error silent.
-// It useful for graceful.Shutdown function.
+// It is supported by graceful.ExitAfter or graceful.ExitAfterContext.
 //
 //  import (
 //  	"os"
 //
-//  	"github.com/spf13/cobra"
-//  	"go.octolab.org/safe"
-//  	"go.octolab.org/toolkit/cli/graceful"
+//  	cli "github.com/spf13/cobra"
+//  	"go.octolab.org/toolkit/cli/cobra"
 //  )
 //
-//  cmd := cobra.Command{
-//  	RunE: func(cmd *cobra.Command, args []string) error {
-//  		return SilentError(cmd, action(), 2, "failed action")
+//  cmd := cli.Command{
+//  	RunE: func(cmd *cli.Command, args []string) error {
+//  		return cobra.SilentError(cmd, action(), 2, "failed action")
 //  	}
 //  }
-//
-//  safe.Do(
-//  	func() error { return cmd.ExecuteContext(ctx) },
-//  	graceful.Shutdown(os.Stderr, os.Exit),
-//  )
 //
 func SilentError(
 	cmd *cobra.Command,
