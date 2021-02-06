@@ -1,7 +1,6 @@
 package graceful
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	"io"
@@ -28,22 +27,14 @@ import (
 //  	graceful.ExitAfter(root.Execute, os.Stderr, os.Exit)
 //  }
 //
-func ExitAfter(
-	action func() error,
-	stderr io.Writer, callback func(int),
-) {
-	safe.Do(action, exit(stderr, callback))
-}
-
-// ExitAfterContext exits after the action and handles any errors that occurred by it,
-// in particular any panics. It supports errors.Silent to redefine an exit code and
-// proxies the passed context to the action.
+// For context-based actions
 //
 //  import (
 //  	"context"
 //  	"os"
 //
 //  	"example.com/path/to/cobra/cmd"
+//  	"go.octolab.org/fn"
 //  	"go.octolab.org/toolkit/cli/graceful"
 //  )
 //
@@ -52,15 +43,14 @@ func ExitAfter(
 //  	defer cancel()
 //
 //  	root := cmd.New(os.Stderr, os.Stdout)
-//  	graceful.ExitAfterContext(ctx, root.ExecuteContext, os.Stderr, os.Exit)
+//  	graceful.ExitAfter(fn.HoldContext(ctx, root.ExecuteContext), os.Stderr, os.Exit)
 //  }
 //
-func ExitAfterContext(
-	ctx context.Context,
-	action func(context.Context) error,
+func ExitAfter(
+	action func() error,
 	stderr io.Writer, callback func(int),
 ) {
-	ExitAfter(func() error { return action(ctx) }, stderr, callback)
+	safe.Do(action, exit(stderr, callback))
 }
 
 func exit(stderr io.Writer, callback func(int)) func(error) {

@@ -2,7 +2,6 @@ package graceful_test
 
 import (
 	"bytes"
-	"context"
 	"errors"
 	"fmt"
 	"strings"
@@ -31,61 +30,61 @@ func TestExitAfterContext(t *testing.T) {
 
 	tests := map[string]struct {
 		exit   func(int)
-		action func(context.Context) error
+		action func() error
 		verify func(*bytes.Buffer)
 	}{
 		"common error": {
 			exit: func(code int) { assert.Equal(t, 1, code) },
-			action: func(context.Context) error {
+			action: func() error {
 				return errors.New("a common error")
 			},
 			verify: empty,
 		},
 		"native wrapped common error": {
 			exit: func(code int) { assert.Equal(t, 1, code) },
-			action: func(context.Context) error {
+			action: func() error {
 				return fmt.Errorf("wrapped: %w", errors.New("a common error"))
 			},
 			verify: empty,
 		},
 		"pkg wrapped common error": {
 			exit: func(code int) { assert.Equal(t, 1, code) },
-			action: func(context.Context) error {
+			action: func() error {
 				return pkg.Wrap(errors.New("a common error"), "wrapped")
 			},
 			verify: empty,
 		},
 		"silent error": {
 			exit: func(code int) { assert.Equal(t, 2, code) },
-			action: func(context.Context) error {
+			action: func() error {
 				return cli.NewSilent(errors.New("a common error"), 2, msg)
 			},
 			verify: silent,
 		},
 		"native wrapped silent error": {
 			exit: func(code int) { assert.Equal(t, 2, code) },
-			action: func(context.Context) error {
+			action: func() error {
 				return fmt.Errorf("wrapped: %w", cli.NewSilent(errors.New("a common error"), 2, msg))
 			},
 			verify: silent,
 		},
 		"pkg wrapped silent error": {
 			exit: func(code int) { assert.Equal(t, 2, code) },
-			action: func(context.Context) error {
+			action: func() error {
 				return pkg.Wrap(cli.NewSilent(errors.New("a common error"), 2, msg), "wrapped")
 			},
 			verify: silent,
 		},
 		"recovered common error": {
 			exit: func(code int) { assert.Equal(t, 1, code) },
-			action: func(context.Context) error {
+			action: func() error {
 				panic(errors.New("a common error"))
 			},
 			verify: recovered,
 		},
 		"recovered silent error": {
 			exit: func(code int) { assert.Equal(t, 1, code) },
-			action: func(context.Context) error {
+			action: func() error {
 				panic(cli.NewSilent(errors.New("a common error"), 2, msg))
 			},
 			verify: recovered,
@@ -95,7 +94,7 @@ func TestExitAfterContext(t *testing.T) {
 	for name, test := range tests {
 		t.Run(name, func(t *testing.T) {
 			buf := bytes.NewBuffer(nil)
-			ExitAfterContext(context.TODO(), test.action, buf, test.exit)
+			ExitAfter(test.action, buf, test.exit)
 			test.verify(buf)
 		})
 	}

@@ -68,6 +68,7 @@ github.com/google/pprof v0.0.0-20181206194817-3ea8567a2e57/go.mod h1:zfwlbNMJ+OI
 github.com/google/pprof v0.0.0-20190515194954-54271f7e092f/go.mod h1:zfwlbNMJ+OItoe0UupaVj+oy1omPYYDuagoSzA8v9mc=
 github.com/google/renameio v0.1.0/go.mod h1:KWCgfxg9yswjAJkECMjeO8J8rahYeXnNhOm40UhjYkI=
 github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+github.com/google/uuid v1.2.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/googleapis/gax-go/v2 v2.0.4/go.mod h1:0Wqv26UfaUD9n4G6kQubkQ+KchISgw+vpHVxEJEs9eg=
 github.com/googleapis/gax-go/v2 v2.0.5/go.mod h1:DWXyrwAJ9X0FpwwEdw+IPEYBICEFu5mhpdKc/us6bOk=
 github.com/gopherjs/gopherjs v0.0.0-20181017120253-0766667cb4d1 h1:EGx4pi6eqNxGaHF6qqu48+N2wcFQ5qg5FXgOdqsJ5d8=
@@ -196,6 +197,8 @@ github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2/go.mod h1:UETIi67q
 go.etcd.io/bbolt v1.3.2/go.mod h1:IbVyRI1SCnLcuJnV2u8VeU0CEYM7e686BmAb1XKL+uU=
 go.octolab.org v0.7.2 h1:Dg3SsGKlny1p8asWaMnx+87mEzImIFj5mSSqjTFlWZU=
 go.octolab.org v0.7.2/go.mod h1:nKRNx6ldZmcrMJckYRvIctL2ed8IremxWwK30lrVL5A=
+go.octolab.org v0.9.0 h1:NVLi5C/Fh2Miyr42dFPrD0Yu6dhmElJHcqirr2HOhug=
+go.octolab.org v0.9.0/go.mod h1:nGTsvNE5SzxSriL/1u0xl5B+ttjIn9RzIbAhzaKE+Sk=
 go.octolab.org/toolkit/config v0.0.4 h1:Q/MnSuRf4ttHCuAaq7PqpD8xQhEtmfK8mO9NX1IxvlA=
 go.octolab.org/toolkit/config v0.0.4/go.mod h1:dI3TlD3b4t0ilP7T+q0BYs6mhYBXm8i4TCLqCabykBA=
 go.opencensus.io v0.21.0/go.mod h1:mSImk1erAIZhrmZN+AvHh14ztQfjbGwt4TtuofqLduU=

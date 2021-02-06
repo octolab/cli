@@ -8,6 +8,6 @@ require (
 	github.com/spf13/cobra v1.1.1
 	github.com/spf13/viper v1.7.1
 	github.com/stretchr/testify v1.7.0
-	go.octolab.org v0.7.2
+	go.octolab.org v0.9.0
 	go.octolab.org/toolkit/config v0.0.4
 )
