@@ -1,4 +1,4 @@
-> # 💾 toolkit/cli
+> # 💾 cli
 >
 > Toolkit for command line interfaces.
 
