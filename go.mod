@@ -9,5 +9,5 @@ require (
 	github.com/spf13/viper v1.11.0
 	github.com/stretchr/testify v1.7.1
 	go.octolab.org v0.12.0
-	go.octolab.org/toolkit/config v0.0.4
+	go.octolab.org/toolkit/config v0.0.5
 )
