@@ -9,6 +9,20 @@
 [![Coverage][coverage.icon]][coverage.page]
 [![Mirror][mirror.icon]][mirror.page]
 
+## 💡 Idea
+
+...
+
+A full description of the idea is available [here][design.page].
+
+## 🏆 Motivation
+
+...
+
+## 🤼‍♂️ How to
+
+...
+
 ## 🧩 Integration
 
 The library uses [SemVer](https://semver.org) for versioning, and it is not
@@ -18,6 +32,10 @@ You can use [go modules](https://github.com/golang/go/wiki/Modules) to manage it
 ```bash
 $ go get go.octolab.org/toolkit/cli@latest
 ```
+
+## 🤲 Outcomes
+
+...
 
 <p align="right">made with ❤️ for everyone</p>
 
