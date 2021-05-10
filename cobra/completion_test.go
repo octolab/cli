@@ -15,22 +15,27 @@ func TestCompletionCommand(t *testing.T) {
 		format   string
 		expected string
 	}{
-		"Bash":       {"bash", "# bash completion for cli"},
+		"Bash":       {"bash", "# bash completion V2 for cli"},
 		"fish":       {"fish", "# fish completion for cli"},
 		"Zsh":        {"zsh", "#compdef _cli cli"},
-		"PowerShell": {"powershell", "Register-ArgumentCompleter -Native -CommandName 'cli' -ScriptBlock"},
+		"PowerShell": {"powershell", "# powershell completion for cli"},
 	}
 
 	for name, test := range tests {
 		t.Run(name, func(t *testing.T) {
-			buf := bytes.NewBuffer(nil)
-			app := &cobra.Command{Use: "cli"}
-			app.AddCommand(NewCompletionCommand())
-			app.SetArgs([]string{"completion", test.format})
-			app.SetOut(buf)
+			for _, cmd := range []*cobra.Command{
+				NewCompletionCommand(),
+				{Use: "hack for HasSubCommands"},
+			} {
+				buf := bytes.NewBuffer(nil)
+				app := &cobra.Command{Use: "cli"}
+				app.AddCommand(cmd)
+				app.SetArgs([]string{"completion", test.format})
+				app.SetOut(buf)
 
-			assert.NoError(t, app.Execute())
-			assert.Contains(t, buf.String(), test.expected)
+				assert.NoError(t, app.Execute())
+				assert.Contains(t, buf.String(), test.expected)
+			}
 		})
 	}
 }
